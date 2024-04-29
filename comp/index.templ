@@ -1,0 +1,59 @@
+package comp
+
+templ layout() {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			// <link rel="icon" type="image/webp" href="/assets/favicon.webp"/>
+			<title>Hello world</title>
+			<link rel="stylesheet" href="/assets/styles.css"/>
+			<script defer src="https://cdn.jsdelivr.net/npm/htmx.org@1.9.11/dist/htmx.min.js" integrity="sha256-0VEHzH8ECp6DsbZhdv2SetQLXgJVgToD+Mz+7UbuQrA=" crossorigin="anonymous"></script>
+			<meta name="htmx-config" content='{"includeIndicatorStyles": false}'/>
+			// alpinejs
+			<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
+			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.7/dist/cdn.min.js" integrity="sha256-W9xdY1a0Nk2QJAZVLIGVqJ6HiGG891GDFl74DSopWuI=" crossorigin="anonymous"></script>
+			<link rel="preconnect" href="https://rsms.me/"/>
+			<link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
+		</head>
+		<body hx-boost="true" hx-indicator="#body-boost-indicator" class="h-full bg-white">
+			<div id="body-boost-indicator" class="w-full absolute z-50">
+				<div class="w-full h-full bg-indigo-500 animate-pulse ease-in-out"></div>
+			</div>
+			{ children... }
+			<script src="/assets/index.js"></script>
+		</body>
+	</html>
+}
+
+templ Index() {
+	@layout() {
+		<div class="flex flex-col items-center justify-center h-screen mx-auto">
+			<h1 class="text-4xl font-bold">Hello world</h1>
+			<p class="text-lg">This is a simple example of a htmx and alpinejs app</p>
+			{ children... }
+		</div>
+	}
+}
+
+templ Button() {
+	<button hx-get="/click" hx-swap="outerHTML" hx-push-url="true" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md">Click me</button>
+}
+
+templ Clicked() {
+	<p class="text-lg">You clicked the button</p>
+}
+
+templ IndexPage() {
+	@Index() {
+		@Button()
+	}
+}
+
+templ ClickedPage() {
+	@Index() {
+		@Clicked()
+	}
+}

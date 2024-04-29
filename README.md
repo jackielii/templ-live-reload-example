@@ -3,6 +3,7 @@
 This example project demonstrates live reloading of a templ project with:
 
 - tailwindcss for styling
+- htmx for ajax requests
 - alpine.js for interactivity
 - esbuild for bundling js
 - templ for live reloading

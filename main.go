@@ -12,6 +12,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/angelofallars/htmx-go"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jackielii/templ-live-reload-example/comp"
@@ -43,7 +44,7 @@ func newRoot() http.Handler {
 	})
 
 	r.Get("/click", func(w http.ResponseWriter, r *http.Request) {
-		if r.Header.Get("HX-Request") == "true" {
+		if htmx.IsHTMX(r) {
 			comp.Clicked().Render(r.Context(), w)
 		} else {
 			comp.ClickedPage().Render(r.Context(), w)

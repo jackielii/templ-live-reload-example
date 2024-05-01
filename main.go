@@ -20,6 +20,7 @@ import (
 )
 
 func devNoCache(next http.Handler) http.Handler {
+	dev := os.Getenv("DEV") == "true"
 	if !dev {
 		return next
 	}
@@ -107,11 +108,8 @@ func run(port string, h http.Handler) {
 	<-serverCtx.Done()
 }
 
-var dev = false
-
 func main() {
 	godotenv.Load(".env")
-	dev = os.Getenv("DEV") == "true"
 	root := newRoot()
 	port := cmp.Or(os.Getenv("PORT"), "8080")
 	run(port, root)

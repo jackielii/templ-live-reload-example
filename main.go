@@ -19,7 +19,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func noCache(next http.Handler) http.Handler {
+func devNoCache(next http.Handler) http.Handler {
 	if !dev {
 		return next
 	}
@@ -37,7 +37,7 @@ func newRoot() http.Handler {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Compress(5))
 
-	r.With(noCache).Mount("/assets/", http.StripPrefix("/assets", http.FileServer(http.Dir("assets"))))
+	r.With(devNoCache).Mount("/assets/", http.StripPrefix("/assets", http.FileServer(http.Dir("assets"))))
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		comp.IndexPage().Render(r.Context(), w)
